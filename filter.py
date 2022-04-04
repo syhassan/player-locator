@@ -115,6 +115,7 @@ if __name__ == "__main__":
             
             P = (I - (K*H)) * P
             
+            # Write state to file
             for i in range(4):
                 filtered.write(str(float(x[i]))+',')
             filtered.write('\n')
@@ -122,4 +123,4 @@ if __name__ == "__main__":
     finally:
         predicted.close()
         filtered.close()
-        print("done")
+        print("\nFiles closed!\n")

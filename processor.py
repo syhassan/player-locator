@@ -8,6 +8,7 @@ a = [0, 0, 0, 0]
 vel = [0, 0]
 
 sensor = [[0]*2 for i in range(4)]
+
 sensor[0][0]   = 00.00    # Left Bottom Sensor
 sensor[0][0]   = 00.00
 sensor[1][0]   = 60.00    # Right Bottom Sensor
@@ -85,4 +86,4 @@ if __name__ == "__main__":
         signal_file.close()
         predicted_pos.close()
         predicted_vel.close()
-        print("done")
+        print("\nFiles closed!\n")

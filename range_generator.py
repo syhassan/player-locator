@@ -24,7 +24,7 @@ min_limit   = 00.00             # Lower X and Y axis limit
 # Distance list from: lb, rb, lt, rt
 dist        = [58.309519, 58.309519, 58.309519, 58.309519]
 signal      = [58.309519, 58.309519, 58.309519, 58.309519]
-pos_prev = [30.00, 50.00]
+#pos_prev = [30.00, 50.00]
 
 if __name__ == "__main__":
     
@@ -50,7 +50,7 @@ if __name__ == "__main__":
     # Create new files for data
     signal_file = open("data/signals.txt", "a")
     positions_file = open("data/positions.txt", "a")
-    velocities_file = open("data/velocities.txt", "a")
+    #velocities_file = open("data/velocities.txt", "a")
         
     try:
         while True:

@@ -35,20 +35,20 @@ if __name__ == "__main__":
     
     ground_truth = open("data/positions.txt", "r")
     true_positions = ground_truth.readlines()
+            
+    filtx = [0 for i in range(len(filtered_values))]
+    predx = [0 for i in range(len(filtered_values))]
+    posix = [0 for i in range(len(filtered_values))]
+    
+    filty = [0 for i in range(len(filtered_values))]
+    predy = [0 for i in range(len(filtered_values))]
+    posiy = [0 for i in range(len(filtered_values))]
+    
+    time  = [0 for i in range(len(filtered_values))]
     
     try:
-        # All files should be the same length so length of any would work to iterate over
         
-        filtx = [0 for i in range(len(filtered_values))]
-        predx = [0 for i in range(len(filtered_values))]
-        posix = [0 for i in range(len(filtered_values))]
-        
-        filty = [0 for i in range(len(filtered_values))]
-        predy = [0 for i in range(len(filtered_values))]
-        posiy = [0 for i in range(len(filtered_values))]
-        
-        time  = [0 for i in range(len(filtered_values))]
-                
+        # All files should be the same length so length of any would work to iterate over    
         for i in range(len(filtered_values)):
         
             str_buff = filtered_values[i].split(",")
@@ -71,6 +71,7 @@ if __name__ == "__main__":
             time[i] = t*(i+1)
             
         
+        # Make figures for y and x axis coordinates separately
         fig1 = plt.figure(1)
         plt.plot(time, filtx, label = "Filtered Values")
         plt.plot(time, predx, label = "Predicted Values", linestyle='dotted')
@@ -102,4 +103,4 @@ if __name__ == "__main__":
         predicted.close()
         filtered.close()
         ground_truth.close()
-        print("done")
+        print("\nFiles closed!\n")
