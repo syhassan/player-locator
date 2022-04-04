@@ -73,7 +73,7 @@ if __name__ == "__main__":
         
         fig1 = plt.figure(1)
         plt.plot(time, filtx, label = "Filtered Values")
-        plt.plot(time, predx, label = "Predicted Values")
+        plt.plot(time, predx, label = "Predicted Values", linestyle='dotted')
         plt.plot(time, posix, label = "True Values")
         
         plt.legend()
@@ -86,7 +86,7 @@ if __name__ == "__main__":
         fig2 = plt.figure(2)
         
         plt.plot(time, filty, label = "Filtered Values")
-        plt.plot(time, predy, label = "Predicted Values")
+        plt.plot(time, predy, label = "Predicted Values", linestyle='dotted')
         plt.plot(time, posiy, label = "True Values")
         
         plt.legend()
