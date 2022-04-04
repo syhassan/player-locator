@@ -13,5 +13,5 @@ Lastly, `plot.py` makes a plot of them to view and compare the filtered values, 
 ## Results
 The multilateration works as planned but the filter either overfits to the multilateration model or becomes noisy and overshoots estimates when the process noise covariance matrix Q from `filter.py` has small values. This is because the estimates from the kalman filter are using velocity as an input, but the predicted velocities come from the noisy values. If there were a secondary source of velocity data from the sensor on the player, the two data sets would fuse to make a more reasonable estimation.
 
-![Alt text](figures/Figure_1.png?raw=true "Player X-Axis Position")
-![Alt text](figures/Figure_2.png?raw=true "Player Y-Axis Position")
+![](figures/Figure_1.png?raw=true "Player X-Axis Position")
+![](figures/Figure_2.png?raw=true "Player Y-Axis Position")
