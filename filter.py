@@ -5,7 +5,7 @@ import os
 # Simple Kalman Filter Implemented
 
 # Initial State x
-x = np.matrix([[30.00],
+x_u = np.matrix([[30.00],
                [50.00],
                [0.00],
                [0.00]])
@@ -52,7 +52,7 @@ R = np.matrix([[sig, 0],
                [0, sig]])
 
 # Initial Covriance Matrix P
-P = np.matrix([[0.00000001, 0, 0, 0],
+P_u = np.matrix([[0.00000001, 0, 0, 0],
                [0, 0.00000001, 0, 0],
                [0, 0, 0.00000001, 0],
                [0, 0, 0, 0.00000001]])
@@ -90,34 +90,34 @@ if __name__ == "__main__":
             z = [[float(position[0])],[float(position[1])]]
             
             # Predict
-            vx = (float(z[0][0]) - float(x[0]))/t
-            vy = (float(z[1][0]) - float(x[1]))/t
+            vx = (float(z[0][0]) - float(x_u[0]))/t
+            vy = (float(z[1][0]) - float(x_u[1]))/t
             
-            x[0] = z[0]
-            x[1] = z[1]
-            x[2] = vx
-            x[3] = vy    
+            x_u[0] = z[0]
+            x_u[1] = z[1]
+            x_u[2] = vx
+            x_u[3] = vy    
             
             u = [[(vx - vx_prev)/t], [(vy - vy_prev)/t]]
             
-            x = np.dot(A, x) + np.dot(B, u)
+            x_p = np.matmul(A, x_u) + np.matmul(B, u)
 
-            P = np.dot(np.dot(A, P), A.T) + Q
+            P_p = np.matmul(np.matmul(A, P_u), A.T) + Q
 
             vx_prev = vx
             vy_prev = vy
             
             # Update
-            K = np.dot(np.dot(P, H.T), np.linalg.inv(np.dot(H, np.dot(P, H.T)) + R))
-            x = x + np.dot(K, (z - np.dot(H, x)))
+            K = np.matmul(np.matmul(P_p, H.T), np.linalg.inv(np.matmul(H, np.matmul(P_p, H.T)) + R))
+            x_u = x_p + np.matmul(K, (z - np.matmul(H, x_p)))
             
             I = np.eye(H.shape[1])
             
-            P = (I - (K*H)) * P
+            P_u = (I - (K*H)) * P_p
             
             # Write state to file
             for i in range(4):
-                filtered.write(str(float(x[i]))+',')
+                filtered.write(str(float(x_u[i]))+',')
             filtered.write('\n')
 
     finally:
