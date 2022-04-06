@@ -61,6 +61,8 @@ if __name__ == "__main__":
                 b[i] = 2*sensor[i][1]
                 a[i] = 2*sensor[i][0]
             
+            # Perform trilateration with different triplet combinations of the 4 sensors
+            
             A = 2
             B = 1
             C = 0
@@ -89,7 +91,7 @@ if __name__ == "__main__":
             x4 = ((c[A]-c[C])*(b[B]-b[A])+(b[A]-b[C])*(c[A]-c[B]))/((b[B]-b[A])*(a[C]-a[A])+(b[C]-b[A])*(a[A]-a[B]))
             y4 = (c[A]-c[B]+(a[A]-a[B])*x4)/(b[B]-b[A])
 
-            # Write data to files
+            # Write data to files after averaging certain values
             trilaterated_positions.write(str(((x3+x4)/2))+','+str(((y1+y4)/2))+',\n')
             
     finally:
