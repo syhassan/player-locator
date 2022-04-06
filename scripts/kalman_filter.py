@@ -42,10 +42,10 @@ H = np.matrix([[1, 0, 0, 0],
 sig = 0.03
 
 # Process Noise Covariance Matrix Q
-Q = np.matrix([[0.5, 0, 0, 0],
-               [0, 0.5, 0, 0],
-               [0, 0, 0.5, 0],
-               [0, 0, 0, 0.5]])
+Q = np.matrix([[0.08, 0, 0, 0],
+               [0, 0.08, 0, 0],
+               [0, 0, 0.08, 0],
+               [0, 0, 0, 0.08]])
                
 # Sensor Noise Covariance Matrix R
 R = np.matrix([[sig, 0],
@@ -60,24 +60,24 @@ P_u = np.matrix([[0.00000001, 0, 0, 0],
 if __name__ == "__main__":
     
     # Exit execution if predicted positions from multilaterion file does not exist.
-    if os.path.exists("data/predicted_positions.txt"):
+    if os.path.exists("../data/predicted_positions.txt"):
         print("Predictions file found.")
     else:
         print("Predictions file not found.")
         quit()
            
     # Check for existing files from previous run to replace
-    if os.path.exists("data/filtered.txt"):
+    if os.path.exists("../data/filtered.txt"):
         print("Replacing old filtered state file.")
-        os.remove("data/filtered.txt")
+        os.remove("../data/filtered.txt")
     else:
         print("Writing to new filtered file.")
     
     # Write to file
-    filtered = open("data/filtered.txt", "a")
+    filtered = open("../data/filtered.txt", "a")
     
     # Read from file
-    predicted = open("data/predicted_positions.txt", "r")
+    predicted = open("../data/predicted_positions.txt", "r")
     signals = predicted.readlines()
 
     try:

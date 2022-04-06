@@ -24,31 +24,25 @@ y_old = 50.00
 if __name__ == "__main__":
     
     # Exit execution if signals file does not exist.
-    if os.path.exists("data/signals.txt"):
+    if os.path.exists("../data/signals.txt"):
         print("Signals file found.")
     else:
         print("Signals file not found.")
         quit()
            
     # Check for existing files from previous run to replace
-    if os.path.exists("data/predicted_positions.txt"):
-        print("Replacing old predicted_positions file.")
-        os.remove("data/predicted_positions.txt")
+    if os.path.exists("../data/trilaterated_positions.txt"):
+        print("Replacing old trilaterated_positions file.")
+        os.remove("../data/trilaterated_positions.txt")
     else:
-        print("Writing to new predicted_positions file.")
-    
-    if os.path.exists("data/predicted_velocities.txt"):
-        print("Replacing old predicted_velocities file.")
-        os.remove("data/predicted_velocities.txt")
-    else:
-        print("Writing to new predicted_velocities file.")
+        print("Writing to new trilaterated_positions file.")
+
     
     # New files for predictions
-    predicted_pos = open("data/predicted_positions.txt", "a")
-    predicted_vel = open("data/predicted_velocities.txt", "a")
+    trilaterated_positions = open("../data/trilaterated_positions.txt", "a")
     
     # Read from file
-    signal_file = open("data/signals.txt", "r")
+    signal_file = open("../data/signals.txt", "r")
     signals = signal_file.readlines()
     
     try:
@@ -67,23 +61,38 @@ if __name__ == "__main__":
                 b[i] = 2*sensor[i][1]
                 a[i] = 2*sensor[i][0]
             
-            x = ((c[0]-c[3])*(b[2]-b[1])-(b[3]-b[0])*(c[1]-c[2]))/((b[2]-b[1])*(a[3]-a[0])+(b[3]-b[0])*(a[1]-a[2]))
-            y = (c[1]-c[2]+(a[1]-a[2])*x)/(b[2]-b[1])
+            A = 2
+            B = 1
+            C = 0
             
-            # Calculate velocity on x and y axis compared to old reading
-            vel[0] = (x - x_old) / 0.05
-            vel[1] = (y - y_old) / 0.05
+            x1 = ((c[A]-c[C])*(b[B]-b[A])+(b[A]-b[C])*(c[A]-c[B]))/((b[B]-b[A])*(a[C]-a[A])+(b[C]-b[A])*(a[A]-a[B]))
+            y1 = (c[A]-c[B]+(a[A]-a[B])*x1)/(b[B]-b[A])
             
+            A = 1
+            B = 2
+            C = 3
+            
+            x2 = ((c[A]-c[C])*(b[B]-b[A])+(b[A]-b[C])*(c[A]-c[B]))/((b[B]-b[A])*(a[C]-a[A])+(b[C]-b[A])*(a[A]-a[B]))
+            y2 = (c[A]-c[B]+(a[A]-a[B])*x2)/(b[B]-b[A])
+            
+            A = 3
+            B = 0
+            C = 1
+            
+            x3 = ((c[A]-c[C])*(b[B]-b[A])+(b[A]-b[C])*(c[A]-c[B]))/((b[B]-b[A])*(a[C]-a[A])+(b[C]-b[A])*(a[A]-a[B]))
+            y3 = (c[A]-c[B]+(a[A]-a[B])*x3)/(b[B]-b[A])
+            
+            A = 0
+            B = 2
+            C = 3
+            
+            x4 = ((c[A]-c[C])*(b[B]-b[A])+(b[A]-b[C])*(c[A]-c[B]))/((b[B]-b[A])*(a[C]-a[A])+(b[C]-b[A])*(a[A]-a[B]))
+            y4 = (c[A]-c[B]+(a[A]-a[B])*x4)/(b[B]-b[A])
+
             # Write data to files
-            predicted_pos.write(str(x)+','+str(y)+',\n')
-            predicted_vel.write(str(vel[0])+','+str(vel[1])+',\n')
+            trilaterated_positions.write(str(((x3+x4)/2))+','+str(((y1+y4)/2))+',\n')
             
-            # Configure new reading as old for next iteration
-            x_old = x
-            y_old = y
-    
     finally:
         signal_file.close()
-        predicted_pos.close()
-        predicted_vel.close()
+        trilaterated_positions.close()
         print("\nFiles closed!\n")

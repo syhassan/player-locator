@@ -24,33 +24,33 @@ min_limit   = 00.00             # Lower X and Y axis limit
 # Distance list from: lb, rb, lt, rt
 dist        = [58.309519, 58.309519, 58.309519, 58.309519]
 signal      = [58.309519, 58.309519, 58.309519, 58.309519]
-#pos_prev = [30.00, 50.00]
+pos_prev = [30.00, 50.00]
 
 if __name__ == "__main__":
     
     # Check for existing files from previous run to replace
-    if os.path.exists("data/signals.txt"):
+    if os.path.exists("../data/signals.txt"):
         print("Replacing old signals file.")
-        os.remove("data/signals.txt")
+        os.remove("../data/signals.txt")
     else:
         print("Writing to new signals file.") 
     
-    if os.path.exists("data/positions.txt"):
+    if os.path.exists("../data/positions.txt"):
         print("Replacing old positions file.")
-        os.remove("data/positions.txt")
+        os.remove("../data/positions.txt")
     else:
         print("Writing to new positions file.") 
     
-    if os.path.exists("data/velocities.txt"):
+    if os.path.exists("../data/velocities.txt"):
         print("Replacing old velocities file.")
-        os.remove("data/velocities.txt")
+        os.remove("../data/velocities.txt")
     else:
         print("Writing to new velocities file.") 
     
     # Create new files for data
-    signal_file = open("data/signals.txt", "a")
-    positions_file = open("data/positions.txt", "a")
-    #velocities_file = open("data/velocities.txt", "a")
+    signal_file = open("../data/signals.txt", "a")
+    positions_file = open("../data/positions.txt", "a")
+    velocities_file = open("../data/velocities.txt", "a")
         
     try:
         while True:
@@ -86,6 +86,11 @@ if __name__ == "__main__":
             positions_file.write("\n")
             
             for i in range(2):
+                velocities_file.write(str(player_pos[i]-pos_prev[i]))
+                velocities_file.write(",")
+            velocities_file.write("\n")
+            
+            for i in range(2):
                 pos_prev[i] = player_pos[i]
                 
             # Keep frequency of 20 Hz
@@ -95,4 +100,5 @@ if __name__ == "__main__":
         # Ensure the file is closed (only works with a single Ctrl-C)
         signal_file.close()
         positions_file.close()
+        velocities_file.close()
         print("\nFiles closed!\n")
